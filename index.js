@@ -1,10 +1,13 @@
-const express = require('express');
-const multer = require('multer');
-const { exec } = require('child_process');
-const cors = require('cors');
-const { getAudioDurationInSeconds } = require('get-audio-duration')
-const { parseFile } = require('music-metadata');
-const { inspect } = require('util');
+// const express = require('express');
+// const multer = require('multer');
+// const { exec } = require('child_process');
+// const cors = require('cors');
+// const { getAudioDurationInSeconds } = require('get-audio-duration')
+import multer from 'multer';
+import cors from 'cors';
+import express from 'express';
+import { parseFile } from 'music-metadata';
+import { inspect } from 'util';
 
 // Configure multer to store uploaded files in the 'uploads' directory
 const upload = multer({ dest: 'uploads/' });
