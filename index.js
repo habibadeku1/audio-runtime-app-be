@@ -3,8 +3,8 @@ const multer = require('multer');
 const { exec } = require('child_process');
 const cors = require('cors');
 const { getAudioDurationInSeconds } = require('get-audio-duration')
-import { parseFile } from 'music-metadata';
-import { inspect } from 'util';
+const { parseFile } = require('music-metadata');
+const { inspect } = require('util');
 
 // Configure multer to store uploaded files in the 'uploads' directory
 const upload = multer({ dest: 'uploads/' });
