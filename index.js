@@ -21,9 +21,9 @@ app.post('/upload', upload.single('audio'), async (req, res) => {
   const filePath = req.file.path;
 
   try {
-    const metadata = await parseFile(filePath);
-    console.log(inspect(metadata, { showHidden: false, depth: null }));
-    res.send(JSON.stringify(metadata));
+    const metadata = await parseFile(filePath, { duration: true });
+    // console.log(inspect(metadata, { showHidden: false, depth: null }));
+    res.send(metadata);
     // res.send(`Audio duration: ${duration} seconds.`);
   } catch (error) {
     console.error(error.message);
