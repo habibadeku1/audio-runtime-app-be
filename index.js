@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const { exec } = require('child_process');
+const cors = require('cors');
 
 // Configure multer to store uploaded files in the 'uploads' directory
 const upload = multer({ dest: 'uploads/' });
