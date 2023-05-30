@@ -3,6 +3,8 @@ const multer = require('multer');
 const { exec } = require('child_process');
 const cors = require('cors');
 const { getAudioDurationInSeconds } = require('get-audio-duration')
+import { parseFile } from 'music-metadata';
+import { inspect } from 'util';
 
 // Configure multer to store uploaded files in the 'uploads' directory
 const upload = multer({ dest: 'uploads/' });
@@ -11,14 +13,23 @@ const app = express();
 app.use(cors());
 
 // Set up a route to handle file uploads
-app.post('/upload', upload.single('audio'), (req, res) => {
+app.post('/upload', upload.single('audio'), async (req, res) => {
   // Get the uploaded file path
   const filePath = req.file.path;
 
-  getAudioDurationInSeconds(filePath).then((duration) => {
-    console.log(duration)
-    res.send(`Audio duration: ${duration} seconds.`);
-  });
+  try {
+    const metadata = await parseFile(filePath);
+    console.log(inspect(metadata, { showHidden: false, depth: null }));
+    res.send(JSON.stringify(metadata));
+    // res.send(`Audio duration: ${duration} seconds.`);
+  } catch (error) {
+    console.error(error.message);
+  }
+
+  // getAudioDurationInSeconds(filePath).then((duration) => {
+  //   console.log(duration)
+  //   res.send(`Audio duration: ${duration} seconds.`);
+  // });
 
   // Execute FFmpeg to get the audio duration
   // exec(`ffmpeg -i ${filePath} 2>&1 | grep Duration`, (error, stdout, stderr) => {
